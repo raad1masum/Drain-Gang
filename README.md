@@ -16,10 +16,10 @@
 - Visualize neuro data from CSV to help scientists
 
 # Team Roles
-Jagroop - Deployment Manager
-Akshay - Technical Officer
-Alvin - Design Manager
-Raadwan - Scrum Master, Github Admin
+Jagroop: Deployment Manager
+Akshay: Technical Officer
+Alvin: Design Manager
+Raadwan: Scrum Master, Github Admin
 
 
 ## Project Owner
