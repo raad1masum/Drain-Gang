@@ -16,6 +16,12 @@
 - Visualize neuro data from CSV to help scientists
 
 # Team Roles
+Jagroop - Deployment Manager
+Akshay - Technical Officer
+Alvin - Design Manager
+Raadwan - Scrum Master, Github Admin
+
+
 ## Project Owner
 - Project Owner is Mr. Bernabeo
 - Mr. Bernabeo is an AP Calculus BC teacher at DNHS
