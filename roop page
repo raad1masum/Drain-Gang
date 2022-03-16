@@ -7,6 +7,7 @@ Tech Talk 1- 3/16/22
 Learned about circle queues. (Seven Slimy snakes)
 when queuing new values, the head remains constant and the tail keeps being updated to add to it.
 When Dequeuing values, the head is constantly being removed and the next value in the code becomes the head. The tail remains constant.
+You can return different values in the queue by 
 
 Tech Talk 0-
 Learned about Data Structures
