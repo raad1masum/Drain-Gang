@@ -1,6 +1,6 @@
 # Drain Gang
 
-# Project Pages
+
 ## Project Description
 - Neuroscience data visualization
 - Parse CSV files made in excel
