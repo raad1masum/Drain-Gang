@@ -25,7 +25,7 @@
 ## Project Owner
 - Project Owner is Mr. Bernabeo
 - Mr. Bernabeo is an AP Calculus BC teacher at DNHS
-- We are going to help his girlfriend with her job
+- We are going to help his girlfriend with her job in Neuroscience data structures
 
 ## Scrum Board
 [Link](https://github.com/raad1masum/Drain-Gang/projects/1)
