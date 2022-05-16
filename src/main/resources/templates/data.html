@@ -11,7 +11,19 @@
     <body>
         <div layout:fragment="content" th:remove="tag">
             <h1>Data</h1>
+            <div class="w-100">
+                <input type="range" min="1" max="100" value="50" id="slider">
+                <h1 id="num">50</h1>
+            </div>
         </div>
     </body>
+
+    <script>
+        var slider = document.getElementById("slider");
+        var num = document.getElementById("num");
+        slider.oninput = function() {
+            num.innerHTML = this.value;
+        }
+    </script>
 
 </html>
