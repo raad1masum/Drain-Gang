@@ -22,13 +22,6 @@
     </body>
 
     <script>
-        var slider = document.getElementById("slider");
-        var num = document.getElementById("num");
-        slider.oninput = function() {
-            num.innerHTML = this.value;
-        }
-    </script>
-    <script type="text/javascript">
         var grades = [
             ['Student', 'Grade'],
             ['Person', 12.2],
@@ -52,7 +45,7 @@
             ['Person', 4.6],
             ['Person', 1.5],
             ['Person', 7.9],
-            ['Person ', 2.0],
+            ['Person', 2.0],
             ['Person', 45.7],
             ['Person', 12.2],
             ['Person', 30.5],
@@ -61,19 +54,33 @@
             ['Person', 1.8]
         ];
 
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawChart);
+        var slider = document.getElementById("slider");
+        var num = document.getElementById("num");
+        slider.oninput = function() {
+            num.innerHTML = this.value;
 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable(grades);
+            var newGrades = [
+                ['Student', 'Grade']
+            ];
 
-            var options = {
-                title: 'Student Test Grades',
-                legend: { position: 'none' },
-            };
+            for (var i = 1; i < grades.length; i++) {
+                newGrades[i] = [grades[i][0], grades[i][1] + this.value];
+            }
 
-            var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-            chart.draw(data, options);
+            google.charts.load("current", {packages:["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(newGrades);
+
+                var options = {
+                    title: 'Student Test Grades',
+                    legend: { position: 'none' },
+                };
+
+                var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
         }
     </script>
 </html>
