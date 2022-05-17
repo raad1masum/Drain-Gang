@@ -64,7 +64,7 @@
             ];
 
             for (var i = 1; i < grades.length; i++) {
-                newGrades[i] = [grades[i][0], grades[i][1] + this.value];
+                newGrades[i] = [grades[i][0], parseFloat(grades[i][1]) + parseFloat(this.value)];
             }
 
             google.charts.load("current", {packages:["corechart"]});
