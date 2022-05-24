@@ -89,7 +89,7 @@
                 var sum = 0;
                 for (var i = 1; i < newGrades.length; i++)
                     sum += parseFloat(newGrades[i][1]);
-                return sum / newGrades.length;
+                return Math.round(((sum / newGrades.length) + Number.EPSILON) * 100) / 100
             }
 
             function getMaxValue() {
