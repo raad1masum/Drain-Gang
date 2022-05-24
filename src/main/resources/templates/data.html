@@ -89,6 +89,13 @@
                 return sum / grades.length;
             }
 
+            function getMaxValue() {
+                var max = 0;
+                for (var i = 1; i < grades.length; i++)
+                    if (parseFloat(grades[i][1]) > max)
+                        max = parseFloat(grades[i][1]);
+                return max;
+            }
         }
     </script>
 </html>
