@@ -81,6 +81,14 @@
                 var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
                 chart.draw(data, options);
             }
+
+            function calculateMean() {
+                var sum = 0;
+                for (var i = 1; i < grades.length; i++)
+                    sum += parseFloat(grades[i][1]);
+                return sum / grades.length;
+            }
+
         }
     </script>
 </html>
