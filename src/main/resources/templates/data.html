@@ -96,6 +96,14 @@
                         max = parseFloat(grades[i][1]);
                 return max;
             }
+
+            function getMinValue() {
+                var min = 100;
+                for (var i = 1; i < grades.length; i++)
+                    if (parseFloat(grades[i][1]) < min)
+                        min = parseFloat(grades[i][1]);
+                return min;
+            }
         }
     </script>
 </html>
