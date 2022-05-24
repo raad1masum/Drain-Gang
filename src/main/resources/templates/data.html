@@ -15,7 +15,10 @@
             <h1>Data</h1>
             <div class="w-100">
                 <input type="range" min="1" max="100" value="50" id="slider">
-                <h1 id="num">50</h1>
+                <h2 id="num">50</h2>
+                <h2 >MEAN: <span id="mean"></span></h2>
+                <h2 >MIN: <span id="min"></span></h2>
+                <h2 >MAX: <span id="max"></span></h2>
             </div>
             <div id="chart_div" style="width: 900px; height: 500px;"></div>
         </div>
@@ -84,26 +87,30 @@
 
             function calculateMean() {
                 var sum = 0;
-                for (var i = 1; i < grades.length; i++)
-                    sum += parseFloat(grades[i][1]);
-                return sum / grades.length;
+                for (var i = 1; i < newGrades.length; i++)
+                    sum += parseFloat(newGrades[i][1]);
+                return sum / newGrades.length;
             }
 
             function getMaxValue() {
                 var max = 0;
-                for (var i = 1; i < grades.length; i++)
-                    if (parseFloat(grades[i][1]) > max)
-                        max = parseFloat(grades[i][1]);
+                for (var i = 1; i < newGrades.length; i++)
+                    if (parseFloat(newGrades[i][1]) > max)
+                        max = parseFloat(newGrades[i][1]);
                 return max;
             }
 
             function getMinValue() {
-                var min = 100;
-                for (var i = 1; i < grades.length; i++)
-                    if (parseFloat(grades[i][1]) < min)
-                        min = parseFloat(grades[i][1]);
+                var min = 999999999999999999999999999;
+                for (var i = 1; i < newGrades.length; i++)
+                    if (parseFloat(newGrades[i][1]) < min)
+                        min = parseFloat(newGrades[i][1]);
                 return min;
             }
+
+            document.getElementById("mean").innerHTML = calculateMean();
+            document.getElementById("max").innerHTML = getMaxValue();
+            document.getElementById("min").innerHTML = getMinValue();
         }
     </script>
 </html>
