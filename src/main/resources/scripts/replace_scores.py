@@ -2,38 +2,40 @@ from datetime import datetime
 import pandas as pd
 import sys 
 import csv
-
+import json
+import ast
 # Path to CSV file is encapsulated in the argument to the script
-df = pd.read_csv(sys.argv[1])
-l = pd.read_csv(sys.argv[2])
+
+print(sys.argv[1])
+# Dictionary returned by javascript code on frontend
+new = ast.literal_eval(sys.argv[1])
+og = pd.read_csv(sys.argv[2]) # Original CSV file
 
 print("replacing")
-print(l.set_index('Student ID').to_dict()['Scores'])
+print(og.set_index('Student ID').to_dict()['Scores'])
 print("with")
-print(df.set_index('Student ID').to_dict()['Scores'])
+print(new)
 
-a = df.set_index('Student ID').to_dict()['Scores']
+a = new
 
 final = []
+
+# Open original CSV file and iterate through contents
 with open(sys.argv[2], 'r') as csvfile:
     datareader = csv.reader(csvfile)
-    for row in datareader:
-        if row[0] != 'Email':      
-            for key, value in a.items():
+    for row in datareader: # python list for each line in csv file
+        if row[0] != 'Email': # ignore the first row  
+            # for each key:value pair in dictionary, check to see if current csv line has that key and value and change accordingly
+            for key, value in a.items(): 
                 if row[1] == key:
                     row[4] = value;
-        final.append(row)
+        final.append(row) # add each array to list of arrays
 
-new = sys.argv[2] + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+tme = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+name = (sys.argv[2]).replace(".csv", "") + tme + ".csv" # generate new csv file name
 
-temp = new
-
-myfile = csv.writer(open(new, "w", newline='')) 
+myfile = csv.writer(open(name, "w", newline='')) 
 for row in final:
-    myfile.writerow(row)
+    myfile.writerow(row) # write all rows in final to new csv
 
-
-dfnew = pd.read_csv(temp)
-print(dfnew.set_index('Student ID').to_dict()['Scores'])
-
-
+print(name) # Output csv file name
