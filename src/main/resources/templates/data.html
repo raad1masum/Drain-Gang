@@ -19,6 +19,7 @@
                 <h2 >MEAN: <span id="mean"></span></h2>
                 <h2 >MIN: <span id="min"></span></h2>
                 <h2 >MAX: <span id="max"></span></h2>
+                <h2 >SD: <span id="sd"></span></h2>
             </div>
             <div id="chart_div" style="width: 900px; height: 500px;"></div>
         </div>
@@ -108,9 +109,17 @@
                 return min;
             }
 
+            function getStandardDeviation() {
+                var sum = 0;
+                for (var i = 1; i < newGrades.length; i++)
+                    sum += Math.pow(parseFloat(newGrades[i][1]) - calculateMean(), 2);
+                return Math.round((Math.sqrt(sum / newGrades.length) + Number.EPSILON) * 100) / 100
+            }
+
             document.getElementById("mean").innerHTML = calculateMean();
             document.getElementById("max").innerHTML = getMaxValue();
             document.getElementById("min").innerHTML = getMinValue();
+            document.getElementById("sd").innerHTML = getStandardDeviation();
         }
     </script>
 </html>
