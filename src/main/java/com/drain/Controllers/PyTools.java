@@ -6,19 +6,24 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller 
 public class PyTools {
 
-    @GetMapping("/getScores")
-    public String getScores(String dataPath) throws IOException, InterruptedException {
+    @GetMapping(value = "/get-scores")
+    @ResponseBody
+    public String getScores(@RequestParam String file) throws IOException, InterruptedException {
 
         /* Logic to check if user is authorized to look for files at this path
 
         */
 
         // Build process to run script
-        String scriptPath = "C:\\Users\\akshay\\Desktop\\CSA\\CSA_Projects\\Drain-Gang\\src\\main\\resources\\scripts\\get_scores.py";
+        String scriptPath = "D:\\Drain-Gang\\src\\main\\resources\\scripts\\get_scores.py";
+        String dataPath = "D:\\Drain-Gang\\src\\main\\resources\\scripts\\" + file;
         ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath, dataPath);
 
         processBuilder.redirectErrorStream(true);
