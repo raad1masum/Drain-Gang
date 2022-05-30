@@ -6,15 +6,15 @@ import json
 import ast
 # Path to CSV file is encapsulated in the argument to the script
 
-print(sys.argv[1])
+# print(sys.argv[1])
 # Dictionary returned by javascript code on frontend
 new = ast.literal_eval(sys.argv[1])
 og = pd.read_csv(sys.argv[2]) # Original CSV file
 
-print("replacing")
-print(og.set_index('Student ID').to_dict()['Scores'])
-print("with")
-print(new)
+# print("replacing")
+# print(og.set_index('Student ID').to_dict()['Scores'])
+# print("with")
+# print(new)
 
 a = new
 
@@ -38,4 +38,4 @@ myfile = csv.writer(open(name, "w", newline=''))
 for row in final:
     myfile.writerow(row) # write all rows in final to new csv
 
-print(name) # Output csv file name
+print(name.replace('.\\', "")) # Output csv file name

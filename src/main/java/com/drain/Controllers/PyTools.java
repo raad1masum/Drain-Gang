@@ -3,15 +3,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.tomcat.util.json.JSONParser;
+import org.apache.tomcat.util.json.ParseException;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import netscape.javascript.JSObject;
+
 @Controller 
 public class PyTools {
+    private String dataPath = "D:\\Drain-Gang\\src\\main\\resources\\scripts\\";
 
     @GetMapping(value = "/get-scores")
     @ResponseBody
@@ -47,6 +58,52 @@ public class PyTools {
 
         return ret;
     }
+
+    @PostMapping(value = "/replace-scores")
+    @ResponseBody
+    public String replaceScores(@RequestBody JSONObject params) throws IOException, InterruptedException, ParseException {
+        /* Logic to check if user is authorized to look for files at this path
+
+        */
+
+        // Json object to hashmap
+        Map<String, Integer> a = (Map<String, Integer>) params.get("key1");
+
+        // Iterate through hashmap to build string argument for python script
+        String arg1 = "\"{";
+		for (Map.Entry<String, Integer> set : a.entrySet()) {
+		    arg1 = arg1 + "'" + set.getKey() + "': " + set.getValue() + ", ";
+		}
+        arg1 = arg1.substring(0, arg1.length() - 2);
+        arg1 = arg1 + "}\"";
+
+        // Get filename of csv that needs to be changed
+        String filename = params.get("key2").toString();
+
+        // Setup rest of arguments
+        String scriptPath = "D:\\Drain-Gang\\src\\main\\resources\\scripts\\replace_scores.py";
+        String dataPath = "D:\\Drain-Gang\\src\\main\\resources\\scripts\\" + filename;
+
+        ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath, arg1, dataPath);
+        // Start python script process
+        Process process = processBuilder.start();
+
+        // Read output buffer
+        BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        // Save output as variable 'ret'
+        String line;
+        String ret = "";
+        while ((line = in.readLine()) != null) {
+            ret = ret + line;
+        }
+        process.waitFor();
+        
+        in.close();
+
+        return ret; 
+    }
+
 
     public String replacewithNewScores(String script, String data, ArrayList<Double> newScores) throws Exception {
         String path = "";
