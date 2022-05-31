@@ -51,4 +51,18 @@ public class Database {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate("INSERT INTO file (name, owner) VALUES ('" + filename + "', '" + username + "')");
     }
+
+    public static String getFileList(String username) throws SQLException {
+        Connection conn = DriverManager.getConnection(dbPath);
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from file WHERE owner = '" + username + "'");
+
+        String res = "";
+        while(rs.next()) {
+            res += rs.getString("name") + "\n";
+        }
+
+        return res;
+    }
 }

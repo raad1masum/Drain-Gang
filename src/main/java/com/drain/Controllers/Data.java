@@ -12,7 +12,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -35,6 +37,17 @@ public class Data {
     @GetMapping("/otherStatus")
     public String otherStatus() {
         return "upload-status-bad";
+    }
+
+    @PostMapping(value="/get-file-list")
+    @ResponseBody
+    public String getFileList(@RequestParam String jwt) throws SQLException {
+        String username = Authentication.verifyJWT(jwt);
+        if(username == null) {
+            return "400";
+        }
+
+        return Database.getFileList(username);
     }
 
     @PostMapping(value="/upload")
