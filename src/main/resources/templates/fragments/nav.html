@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>...</title>
+    </head>
+
+    <body>
+        <nav class="px-20 flex flex-row justify-between" th:fragment="header">
+            <div class="nav-logo py-10" style="padding-left: 1.8em">
+                <p class="text-2xl font-bold"><a href="/">DRAIN GANG</a></p>
+            </div>
+            <div class="nav-links py-10 flex flex-row">
+                <div class="about-link">
+                    <a href="/about">
+                        <p class="text-2xl font-medium mr-10">About</p>
+                    </a>
+                </div>
+                <div class="login-link">
+                    <a href="/login-form">
+                        <p class="text-2xl font-medium mr-10">Login</p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </body>
+
+</html>
