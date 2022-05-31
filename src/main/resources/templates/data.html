@@ -130,8 +130,7 @@
 
         function autoScale() {
             if (getMaxValue(grades) != 100) {
-                var diff = 100.0 - getMaxValue(grades);
-                slider.value = diff;
+                slider.value = 100.0 - getMaxValue(grades);
                 update();
             }
         }
