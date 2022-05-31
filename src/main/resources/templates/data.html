@@ -112,7 +112,7 @@
             for (var i = 1; i < array.length; i++)
                 if (parseFloat(array[i][1]) > max)
                     max = parseFloat(array[i][1]);
-            return max;
+            return Math.round((max + Number.EPSILON) * 100) / 100;
         }
 
         function getMinValue(array) {
@@ -120,7 +120,7 @@
             for (var i = 1; i < array.length; i++)
                 if (parseFloat(array[i][1]) < min)
                     min = parseFloat(array[i][1]);
-            return min;
+            return Math.round((min + Number.EPSILON) * 100) / 100;
         }
 
         function getStandardDeviation(array) {
