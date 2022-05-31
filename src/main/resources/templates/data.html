@@ -7,22 +7,25 @@
             <link rel="stylesheet" type="text/css" href="/css/data.css">
             <script type="text/javascript"
                 src="https://www.gstatic.com/charts/loader.js"></script>
+                <script src="https://cdn.tailwindcss.com"></script>
         </div>
     </head>
 
     <body>
         <div layout:fragment="content" th:remove="tag">
             <h1>Data</h1>
-            <div class="w-100">
-                <input type="range" step="0.01" min="1" max="100" value="50" id="slider" oninput="update()">
-                <h2>ADJUST: <span id="num">50</span></h2>
-                <h2>MEAN: <span id="mean"></span></h2>
-                <h2>MIN: <span id="min"></span></h2>
-                <h2>MAX: <span id="max"></span></h2>
-                <h2>SD: <span id="sd"></span></h2>
-                <button onclick="autoScale()">Auto Scale</button>
+            <div class="flex flex-row">
+                <div class="w-1/2 text-2xl flex flex-col p-20 justify-between">
+                    <input type="range" step="0.01" min="0" max="100" value="0" id="slider" oninput="update()">
+                    <h2>ADJUST: <span id="num">50</span></h2>
+                    <h2>MEAN: <span id="mean"></span></h2>
+                    <h2>MIN: <span id="min"></span></h2>
+                    <h2>MAX: <span id="max"></span></h2>
+                    <h2>SD: <span id="sd"></span></h2>
+                    <button onclick="autoScale()">Auto Scale</button>
+                </div>
+                <div id="chart_div" class="w-1/2" style="height: 500px;"></div>
             </div>
-            <div id="chart_div" style="width: 900px; height: 500px;"></div>
         </div>
     </body>
 
@@ -63,6 +66,8 @@
 
         var slider = document.getElementById("slider");
         var num = document.getElementById("num");
+
+        update();
 
         function autoScale() {
             if (getMaxValue(grades) != 100) {
