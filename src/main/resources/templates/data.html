@@ -82,6 +82,12 @@
             var value = document.getElementById("value").value;
             console.log(selection);
             console.log(value);
+
+            if (selection == "maxScore")
+                adjustMaxTo(value);
+            else if (selection == "minScore")
+                adjustMinTo(value);
+
             closeModal();
         }
 
@@ -133,6 +139,16 @@
                 slider.value = 100.0 - getMaxValue(grades);
                 update();
             }
+        }
+
+        function adjustMaxTo(value) {
+            slider.value = value - getMaxValue(grades);
+            update();
+        }
+
+        function adjustMinTo(value) {
+            slider.value = value - getMinValue(grades);
+            update();
         }
 
         function reset() {
