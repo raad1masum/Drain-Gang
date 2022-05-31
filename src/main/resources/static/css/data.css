@@ -1,0 +1,19 @@
+html, body {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+button {
+    background-color: #0075ff !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 5px 0px !important;
+}
+
+h2 {
+    font-weight: bold !important;
+}
+
+span {
+    font-weight: normal !important;
+}
