@@ -94,17 +94,17 @@
                 chart.draw(data, options);
             }
 
-            document.getElementById("mean").innerHTML = calculateMean();
+            document.getElementById("mean").innerHTML = calculateMean(newGrades);
             document.getElementById("max").innerHTML = getMaxValue(newGrades);
-            document.getElementById("min").innerHTML = getMinValue();
-            document.getElementById("sd").innerHTML = getStandardDeviation();
+            document.getElementById("min").innerHTML = getMinValue(newGrades);
+            document.getElementById("sd").innerHTML = getStandardDeviation(newGrades);
         }
 
-        function calculateMean() {
+        function calculateMean(array) {
             var sum = 0;
-            for (var i = 1; i < newGrades.length; i++)
-                sum += parseFloat(newGrades[i][1]);
-            return Math.round(((sum / newGrades.length) + Number.EPSILON) * 100) / 100
+            for (var i = 1; i < array.length; i++)
+                sum += parseFloat(array[i][1]);
+            return Math.round(((sum / array.length) + Number.EPSILON) * 100) / 100
         }
 
         function getMaxValue(array) {
@@ -115,19 +115,19 @@
             return max;
         }
 
-        function getMinValue() {
+        function getMinValue(array) {
             var min = 999999999999999999999999999;
-            for (var i = 1; i < newGrades.length; i++)
-                if (parseFloat(newGrades[i][1]) < min)
-                    min = parseFloat(newGrades[i][1]);
+            for (var i = 1; i < array.length; i++)
+                if (parseFloat(array[i][1]) < min)
+                    min = parseFloat(array[i][1]);
             return min;
         }
 
-        function getStandardDeviation() {
+        function getStandardDeviation(array) {
             var sum = 0;
-            for (var i = 1; i < newGrades.length; i++)
-                sum += Math.pow(parseFloat(newGrades[i][1]) - calculateMean(), 2);
-            return Math.round((Math.sqrt(sum / newGrades.length) + Number.EPSILON) * 100) / 100
+            for (var i = 1; i < array.length; i++)
+                sum += Math.pow(parseFloat(array[i][1]) - calculateMean(array), 2);
+            return Math.round((Math.sqrt(sum / array.length) + Number.EPSILON) * 100) / 100
         }
     </script>
 </html>
