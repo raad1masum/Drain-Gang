@@ -42,7 +42,7 @@
                     <p>Some other text...</p>
                 </div>
                 <div class="modal-footer">
-                    <h3>Modal Footer</h3>
+                    <button onclick="closeModal()" class="submit-btn">Save</button>
                 </div>
             </div>
 
@@ -65,6 +65,10 @@
         window.onclick = function(event) {
             if (event.target == modal)
                 modal.style.display = "none";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
         }
 
         var grades = [

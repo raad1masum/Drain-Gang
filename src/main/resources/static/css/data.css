@@ -11,6 +11,14 @@ button {
   padding: 5px 0px !important;
 }
 
+.submit-btn {
+  background-color: #0cd731 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  padding: 5px 0px !important;
+  width: 60px;
+}
+
 h2 {
   font-weight: bold !important;
 }
@@ -34,18 +42,18 @@ span {
 }
 
 .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-    border-radius: 10px;
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  border-radius: 10px;
 }
 
 @-webkit-keyframes animatetop {
