@@ -1,6 +1,7 @@
 package com.drain.Controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,12 @@ import com.drain.Model.Database;
 
 @Controller
 public class Authentication {
+
+    @GetMapping(value = "/login-form")
+    public String loginForm() {
+        return "login";
+    }
+
     @PostMapping(value = "/login")
     @ResponseBody
     public String getJWT(@RequestParam String username, @RequestParam String password) throws SQLException {

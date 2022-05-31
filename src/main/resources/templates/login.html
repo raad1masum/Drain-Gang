@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <div layout:fragment="metadata" th:remove="tag">
+            <title>Login</title>
+            <link rel="stylesheet" type="text/css" href="/css/data.css">
+            <script type="text/javascript"
+                src="https://www.gstatic.com/charts/loader.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        </div>
+    </head>
+
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+            <h1>Login</h1>
+            <form>
+                <label for="username"><b>Username</b></label>
+                <input id="u" type="text" placeholder="Enter Username" name="username" required>
+                <label for="password"><b>Password</b></label>
+                <input id="p" type="password" placeholder="Enter Password" name="password" required>
+                <input onclick="login()" type="submit" value="submit"></inp>
+            </form>
+    </body>
+
+    <script>
+        function login() {
+            var username = document.getElementById("u").value
+            var password = document.getElementById("p").value
+            axios({
+                method: "post",
+                url: "/login?" + "username=" + username + "&password=" + password,
+                headers: { "Content-Type": "text/plain" }
+            }).then(resp => {
+                localStorage.setItem('token', resp.data);
+            });
+        }
+    </script>
+</html>
