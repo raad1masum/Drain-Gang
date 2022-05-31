@@ -35,14 +35,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>Modal Header</h2>
+                    <h2>Advanced Options</h2>
                 </div>
                 <div class="modal-body">
-                    <p>Some text in the Modal Body</p>
-                    <p>Some other text...</p>
+                    <label for="selection">Select Value to Set: </label>
+
+                    <select id="selection" name="selection">
+                        <option value="maxScore">Max Score</option>
+                        <option value="minScore">Min Score</option>
+                    </select>
+
+                    <br>
+
+                    <label for="value">Value: </label>
+                    <input id="value" type="text" placeholder="Enter Value"
+                        name="value" required>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="closeModal()" class="submit-btn">Save</button>
+                    <button onclick="saveModal()" class="submit-btn">Save</button>
                 </div>
             </div>
 
@@ -65,6 +75,14 @@
         window.onclick = function(event) {
             if (event.target == modal)
                 modal.style.display = "none";
+        }
+
+        function saveModal() {
+            var selection = document.getElementById("selection").value;
+            var value = document.getElementById("value").value;
+            console.log(selection);
+            console.log(value);
+            closeModal();
         }
 
         function closeModal() {
