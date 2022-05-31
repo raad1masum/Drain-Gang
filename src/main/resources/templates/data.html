@@ -7,7 +7,7 @@
             <link rel="stylesheet" type="text/css" href="/css/data.css">
             <script type="text/javascript"
                 src="https://www.gstatic.com/charts/loader.js"></script>
-                <script src="https://cdn.tailwindcss.com"></script>
+            <script src="https://cdn.tailwindcss.com"></script>
         </div>
     </head>
 
@@ -15,21 +15,58 @@
         <div layout:fragment="content" th:remove="tag">
             <div class="flex flex-row">
                 <div class="w-1/2 text-2xl flex flex-col p-20 justify-between">
-                    <input type="range" step="0.01" min="0" max="100" value="0" id="slider" oninput="update()">
+                    <input type="range" step="0.01" min="0" max="100" value="0"
+                        id="slider" oninput="update()">
                     <h2>ADJUST: <span id="num">50</span></h2>
                     <h2>MEAN: <span id="mean"></span></h2>
                     <h2>MAX: <span id="max"></span></h2>
                     <h2>MIN: <span id="min"></span></h2>
                     <h2>SD: <span id="sd"></span></h2>
                     <button onclick="autoScale()">Auto Scale</button>
-                    <button onclick="reset()" style="background-color: red !important;">Reset</button>
+                    <button onclick="reset()" style="background-color: red
+                        !important;">Reset</button>
+                    <button id="modalBtn">Advanced Options</button>
                 </div>
                 <div id="chart_div" class="w-1/2" style="height: 500px;"></div>
             </div>
         </div>
+
+        <div id="modalDiv" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Modal Header</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the Modal Body</p>
+                    <p>Some other text...</p>
+                </div>
+                <div class="modal-footer">
+                    <h3>Modal Footer</h3>
+                </div>
+            </div>
+
+        </div>
     </body>
 
     <script>
+        var modal = document.getElementById("modalDiv");
+        var btn = document.getElementById("modalBtn");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal)
+                modal.style.display = "none";
+        }
+
         var grades = [
             ['Student', 'Grade'],
             ['Person1', 12.2],
