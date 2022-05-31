@@ -31,4 +31,24 @@ public class Database {
 
         return false;
     }
+
+    public static boolean checkFileOwned(String username, String filename) throws SQLException {
+        Connection conn = DriverManager.getConnection(dbPath);
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * from file WHERE name = '" + filename + "' AND owner = '" + username + "'");
+
+        if(rs.next()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void addFile(String username, String filename) throws SQLException {
+        Connection conn = DriverManager.getConnection(dbPath);
+
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("INSERT INTO file (name, owner) VALUES ('" + filename + "', '" + username + "')");
+    }
 }

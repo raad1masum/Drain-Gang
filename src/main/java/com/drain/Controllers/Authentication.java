@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 import com.auth0.jwt.*;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.drain.Model.Database;
 
 @Controller
@@ -22,6 +24,16 @@ public class Authentication {
             return token;
         }
 
-        return "BAD CREDENTIALS";
+        return "BAD_CREDENTIALS";
+    }
+
+    public static String verifyJWT(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256("development_secret")).build();
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getAudience().get(0);
+        } catch (JWTVerificationException e) {
+            return null;
+        }
     }
 }
