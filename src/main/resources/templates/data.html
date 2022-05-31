@@ -14,12 +14,13 @@
         <div layout:fragment="content" th:remove="tag">
             <h1>Data</h1>
             <div class="w-100">
-                <input type="range" min="1" max="100" value="50" id="slider">
-                <h2 id="num">50</h2>
-                <h2 >MEAN: <span id="mean"></span></h2>
-                <h2 >MIN: <span id="min"></span></h2>
-                <h2 >MAX: <span id="max"></span></h2>
-                <h2 >SD: <span id="sd"></span></h2>
+                <input type="range" step="0.01" min="1" max="100" value="50" id="slider" oninput="update()">
+                <h2>ADJUST: <span id="num">50</span></h2>
+                <h2>MEAN: <span id="mean"></span></h2>
+                <h2>MIN: <span id="min"></span></h2>
+                <h2>MAX: <span id="max"></span></h2>
+                <h2>SD: <span id="sd"></span></h2>
+                <button onclick="autoScale()">Auto Scale</button>
             </div>
             <div id="chart_div" style="width: 900px; height: 500px;"></div>
         </div>
@@ -58,22 +59,29 @@
             ['Person28', 1.8]
         ];
 
+        var newGrades = structuredClone(grades);
+
         var slider = document.getElementById("slider");
         var num = document.getElementById("num");
-        slider.oninput = function() {
-            num.innerHTML = this.value;
 
-            var newGrades = [
-                ['Student', 'Grade']
-            ];
+        function autoScale() {
+            if (getMaxValue(grades) != 100) {
+                var diff = 100.0 - getMaxValue(grades);
+                slider.value = diff;
+                update();
+            }
+        }
+
+        function update() {
+            num.innerHTML = slider.value;
 
             for (var i = 1; i < grades.length; i++) {
-                newGrades[i] = [grades[i][0], parseFloat(grades[i][1]) + parseFloat(this.value)];
+                newGrades[i] = [grades[i][0], parseFloat(grades[i][1]) + parseFloat(slider.value)];
             }
 
             google.charts.load("current", {packages:["corechart"]});
             google.charts.setOnLoadCallback(drawChart);
-
+            
             function drawChart() {
                 var data = google.visualization.arrayToDataTable(newGrades);
 
@@ -86,40 +94,40 @@
                 chart.draw(data, options);
             }
 
-            function calculateMean() {
-                var sum = 0;
-                for (var i = 1; i < newGrades.length; i++)
-                    sum += parseFloat(newGrades[i][1]);
-                return Math.round(((sum / newGrades.length) + Number.EPSILON) * 100) / 100
-            }
-
-            function getMaxValue() {
-                var max = 0;
-                for (var i = 1; i < newGrades.length; i++)
-                    if (parseFloat(newGrades[i][1]) > max)
-                        max = parseFloat(newGrades[i][1]);
-                return max;
-            }
-
-            function getMinValue() {
-                var min = 999999999999999999999999999;
-                for (var i = 1; i < newGrades.length; i++)
-                    if (parseFloat(newGrades[i][1]) < min)
-                        min = parseFloat(newGrades[i][1]);
-                return min;
-            }
-
-            function getStandardDeviation() {
-                var sum = 0;
-                for (var i = 1; i < newGrades.length; i++)
-                    sum += Math.pow(parseFloat(newGrades[i][1]) - calculateMean(), 2);
-                return Math.round((Math.sqrt(sum / newGrades.length) + Number.EPSILON) * 100) / 100
-            }
-
             document.getElementById("mean").innerHTML = calculateMean();
-            document.getElementById("max").innerHTML = getMaxValue();
+            document.getElementById("max").innerHTML = getMaxValue(newGrades);
             document.getElementById("min").innerHTML = getMinValue();
             document.getElementById("sd").innerHTML = getStandardDeviation();
+        }
+
+        function calculateMean() {
+            var sum = 0;
+            for (var i = 1; i < newGrades.length; i++)
+                sum += parseFloat(newGrades[i][1]);
+            return Math.round(((sum / newGrades.length) + Number.EPSILON) * 100) / 100
+        }
+
+        function getMaxValue(array) {
+            var max = 0;
+            for (var i = 1; i < array.length; i++)
+                if (parseFloat(array[i][1]) > max)
+                    max = parseFloat(array[i][1]);
+            return max;
+        }
+
+        function getMinValue() {
+            var min = 999999999999999999999999999;
+            for (var i = 1; i < newGrades.length; i++)
+                if (parseFloat(newGrades[i][1]) < min)
+                    min = parseFloat(newGrades[i][1]);
+            return min;
+        }
+
+        function getStandardDeviation() {
+            var sum = 0;
+            for (var i = 1; i < newGrades.length; i++)
+                sum += Math.pow(parseFloat(newGrades[i][1]) - calculateMean(), 2);
+            return Math.round((Math.sqrt(sum / newGrades.length) + Number.EPSILON) * 100) / 100
         }
     </script>
 </html>
