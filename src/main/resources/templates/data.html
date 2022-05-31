@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{fragments/layout}" lang="en">
     <head>
         <div layout:fragment="metadata" th:remove="tag">
             <title>Data</title>
@@ -13,6 +14,9 @@
 
     <body>
         <div layout:fragment="content" th:remove="tag">
+            <div class="nav">
+            </div>
+
             <div class="flex flex-row">
                 <div class="w-1/2 text-2xl flex flex-col p-20 justify-between">
                     <input type="range" step="0.01" min="0" max="100" value="0"
