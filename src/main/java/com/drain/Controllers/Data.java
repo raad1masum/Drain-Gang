@@ -25,6 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class Data {
+    @GetMapping("/")
+    public String index() {
+        return "data";
+    }
+
     @GetMapping("/data")
     public String data() {
         return "data";
