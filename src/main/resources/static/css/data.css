@@ -11,6 +11,14 @@ button {
   font-size: 18px !important;
 }
 
+.upload-btn {
+  background-color: #0075ff !important;
+  color: white !important;
+  border-radius: 50px !important;
+  font-size: 18px !important;
+  padding: 5px 40px;
+}
+
 .submit-btn {
   background-color: #0cd731 !important;
   color: white !important;
