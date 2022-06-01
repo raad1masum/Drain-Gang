@@ -58,6 +58,12 @@
             </div>
 
             <script>
+                window.onload = function() {
+                    if (localStorage.length == 0) {
+                        document.location.href="/";
+                    }
+                };
+
                 var modal = document.getElementById("modalDiv");
                 var btn = document.getElementById("modalBtn");
                 var span = document.getElementsByClassName("close")[0];
