@@ -71,25 +71,19 @@
                     if (localStorage.length == 0) {
                         document.location.href="/login-form";
                     }
+                    propogateFiles();
                 };
-
-                var files;
 
                 function propogateFiles() {
                     axios({
                         method: "post",
                         url: "/get-file-list?" + "jwt=" + localStorage.getItem('token'),
                     }).then((response) => {
-                        console.log(response);
-                        console.log(response.request.response);
-                        files = response.request.response.split('\n');
+                        var files = response.request.response.split('\n');
 
-                        for (var i = 0; i < files.length - 1; i++) {
-                            console.log(files[i]);
-                            console.log("<option value='" + files[i] + "'>" + files[i] + "</option>");
+                        for (var i = 0; i < files.length - 1; i++)
                             var fileSelection = document.getElementById("fileSelection")
                                 .innerHTML += "<option value='" + files[i] + "''>" + files[i] + "</option>";
-                        }
                     });
                 }
 
