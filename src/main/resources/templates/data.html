@@ -36,9 +36,13 @@
                 <select id="fileSelection" name="fileSelection" onchange="updateFile()">
                 </select>
                 <br>
-                <form action="/upload-form">
-                    <input type="submit" class="upload-btn" value="Upload Grades" />
-                </form>
+                <div class="bottom-btn-container flex flex-col items-center">
+                    <button class="bottom-btn">Save Changes</button>
+                    <button class="bottom-btn">Download Grades</button>
+                    <form action="/upload-form">
+                        <input type="submit" class="bottom-btn" value="Upload Grades" />
+                    </form>
+                </div>
             </div>
 
             <div id="modalDiv" class="modal">
