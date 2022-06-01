@@ -37,8 +37,8 @@
                 </select>
                 <br>
                 <div class="bottom-btn-container flex flex-col items-center">
-                    <button class="bottom-btn">Save Changes</button>
-                    <button class="bottom-btn">Download Grades</button>
+                    <button class="bottom-btn" onclick="saveFile()">Save Changes</button>
+                    <button class="bottom-btn" onclick="downloadFile()">Download Grades</button>
                     <form action="/upload-form">
                         <input type="submit" class="bottom-btn" value="Upload Grades" />
                     </form>
@@ -121,6 +121,31 @@
                         newGrades = structuredClone(grades);
 
                         update();
+                    });
+                }
+
+                var parsedJsonData;
+                var jsonString = "";
+
+                function saveFile() {
+                    jsonString += "{";
+
+                    for (var i = 1; i < newGrades.length; i++) {
+                        jsonString += "\"" + newGrades[i][0] + "\": " + newGrades[i][1] + ",";
+                    }
+
+                    jsonString = jsonString.substring(0, jsonString.length - 1);
+                    jsonString += "}";
+
+                    parsedJsonData = JSON.parse(jsonString);
+
+                    axios({
+                        method: "post",
+                        url: "/replace-scores?" + "jwt=" + localStorage.getItem('token') + "&file=" + document.getElementById("fileSelection").value,
+                        headers: { "Content-Type": "application/json" },
+                        data: parsedJsonData
+                    }).then((response) => {
+                        console.log(response);
                     });
                 }
 
