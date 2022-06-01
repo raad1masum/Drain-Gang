@@ -75,9 +75,23 @@ public class PyTools {
         String scriptPath = new ClassPathResource("scripts/replace_scores.py").getFile().getAbsolutePath();
         String dataPath = new ClassPathResource("data").getFile().getAbsolutePath();
 
+        System.out.println("python3" + " " + scriptPath + " " + data + " " + dataPath + " " + file);
         ProcessBuilder processBuilder = new ProcessBuilder("python3", scriptPath, data, dataPath, file);
-        processBuilder.start();
+        processBuilder.redirectErrorStream(true);
 
-        return "OK";
+        Process process = processBuilder.start();
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        String line;
+        String ret = "";
+        while ((line = in.readLine()) != null) {
+            ret = ret + line;
+        }
+
+        process.waitFor();
+        in.close();
+
+        return ret;
     }
 }

@@ -14,14 +14,11 @@
 
     <body>
         <div layout:fragment="content" th:remove="tag">
-            <div class="nav">
-            </div>
-
             <div class="flex flex-row">
                 <div class="w-1/2 text-2xl flex flex-col p-20 justify-between">
                     <input type="range" step="0.01" min="0" max="100" value="0"
                         id="slider" oninput="update()">
-                    <h2>ADJUST: <span id="num">50</span></h2>
+                    <h2>ADJUST: <span id="num"></span></h2>
                     <h2>MEAN: <span id="mean"></span></h2>
                     <h2>MAX: <span id="max"></span></h2>
                     <h2>MIN: <span id="min"></span></h2>
@@ -33,187 +30,243 @@
                 </div>
                 <div id="chart_div" class="w-1/2" style="height: 500px;"></div>
             </div>
-        </div>
 
-        <div id="modalDiv" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>Advanced Options</h2>
-                </div>
-                <div class="modal-body">
-                    <label for="selection">Select Value to Set: </label>
-
-                    <select id="selection" name="selection">
-                        <option value="maxScore">Max Score</option>
-                        <option value="minScore">Min Score</option>
-                    </select>
-
-                    <br>
-
-                    <label for="value">Value: </label>
-                    <input id="value" type="text" placeholder="Enter Value"
-                        name="value" required>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="saveModal()" class="submit-btn">Save</button>
+            <div class="flex flex-col items-center justify-center">
+                <label for="fileSelection">Select File: </label>
+                <select id="fileSelection" name="fileSelection" onchange="updateFile()">
+                </select>
+                <br>
+                <div class="bottom-btn-container flex flex-col items-center">
+                    <button class="bottom-btn" onclick="saveFile()">Save Changes</button>
+                    <button class="bottom-btn" onclick="downloadFile()">Download Grades</button>
+                    <form action="/upload-form">
+                        <input type="submit" class="bottom-btn" value="Upload Grades" />
+                    </form>
                 </div>
             </div>
 
-        </div>
-    </body>
+            <div id="modalDiv" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Advanced Options</h2>
+                    </div>
+                    <div class="modal-body">
+                        <label for="selection">Select Value to Set: </label>
+                        <select id="selection" name="selection">
+                            <option value="maxScore">Max Score</option>
+                            <option value="minScore">Min Score</option>
+                        </select>
 
-    <script>
-        var modal = document.getElementById("modalDiv");
-        var btn = document.getElementById("modalBtn");
-        var span = document.getElementsByClassName("close")[0];
+                        <br>
 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
+                        <label for="value">Value: </label>
+                        <input id="value" type="text" placeholder="Enter Value"
+                            name="value" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="saveModal()" class="submit-btn">Save</button>
+                    </div>
+                </div>
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
+            </div>
 
-        window.onclick = function(event) {
-            if (event.target == modal)
-                modal.style.display = "none";
-        }
+            <div style="height: 100px;">
 
-        function saveModal() {
-            var selection = document.getElementById("selection").value;
-            var value = document.getElementById("value").value;
-
-            if (selection == "maxScore")
-                adjustMaxTo(value);
-            else if (selection == "minScore")
-                adjustMinTo(value);
-
-            closeModal();
-        }
-
-        function closeModal() {
-            modal.style.display = "none";
-        }
-
-        var grades = [
-            ['Student', 'Grade'],
-            ['Person1', 12.2],
-            ['Person2', 9.1],
-            ['Person3', 12.2],
-            ['Person4', 22.9],
-            ['Person5', 0.9],
-            ['Person6', 36.6],
-            ['Person7', 9.1],
-            ['Person8', 30.5],
-            ['Person9', 6.1],
-            ['Person10', 2.7],
-            ['Person11', 0.9],
-            ['Person12', 2.7],
-            ['Person13', 27.1],
-            ['Person14', 3.4],
-            ['Person15', 5.5],
-            ['Person16', 21.0],
-            ['Person17', 7.9],
-            ['Person18', 1.2],
-            ['Person19', 4.6],
-            ['Person20', 1.5],
-            ['Person21', 7.9],
-            ['Person22', 2.0],
-            ['Person23', 45.7],
-            ['Person24', 12.2],
-            ['Person25', 30.5],
-            ['Person26', 15.2],
-            ['Person27', 30.5],
-            ['Person28', 1.8]
-        ];
-
-        var newGrades = structuredClone(grades);
-
-        var slider = document.getElementById("slider");
-        var num = document.getElementById("num");
-
-        update();
-
-        function autoScale() {
-            if (getMaxValue(grades) != 100) {
-                slider.value = 100.0 - getMaxValue(grades);
-                update();
-            }
-        }
-
-        function adjustMaxTo(value) {
-            slider.value = value - getMaxValue(grades);
-            update();
-        }
-
-        function adjustMinTo(value) {
-            slider.value = value - getMinValue(grades);
-            update();
-        }
-
-        function reset() {
-            slider.value = 0;
-            update();
-        }
-
-        function update() {
-            num.innerHTML = slider.value;
-
-            for (var i = 1; i < grades.length; i++) {
-                newGrades[i] = [grades[i][0], parseFloat(grades[i][1]) + parseFloat(slider.value)];
-            }
-
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
+            </div>
             
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable(newGrades);
-
-                var options = {
-                    title: 'Student Test Grades',
-                    legend: { position: 'none' },
+            <script>
+                window.onload = function() {
+                    if (localStorage.length == 0) {
+                        document.location.href="/login-form";
+                    }
+                    propogateFiles();
                 };
 
-                var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-                chart.draw(data, options);
-            }
+                var grades = [];
+                var newGrades = [];
 
-            document.getElementById("mean").innerHTML = calculateMean(newGrades);
-            document.getElementById("max").innerHTML = getMaxValue(newGrades);
-            document.getElementById("min").innerHTML = getMinValue(newGrades);
-            document.getElementById("sd").innerHTML = getStandardDeviation(newGrades);
-        }
+                function propogateFiles() {
+                    axios({
+                        method: "post",
+                        url: "/get-file-list?" + "jwt=" + localStorage.getItem('token'),
+                    }).then((response) => {
+                        var files = response.request.response.split('\n');
 
-        function calculateMean(array) {
-            var sum = 0;
-            for (var i = 1; i < array.length; i++)
-                sum += parseFloat(array[i][1]);
-            return Math.round(((sum / array.length) + Number.EPSILON) * 100) / 100
-        }
+                        for (var i = 0; i < files.length - 1; i++)
+                            var fileSelection = document.getElementById("fileSelection")
+                                .innerHTML += "<option value='" + files[i] + "''>" + files[i] + "</option>";
+                    });
+                }
 
-        function getMaxValue(array) {
-            var max = 0;
-            for (var i = 1; i < array.length; i++)
-                if (parseFloat(array[i][1]) > max)
-                    max = parseFloat(array[i][1]);
-            return Math.round((max + Number.EPSILON) * 100) / 100;
-        }
+                var jsonData;
 
-        function getMinValue(array) {
-            var min = 999999999999999999999999999;
-            for (var i = 1; i < array.length; i++)
-                if (parseFloat(array[i][1]) < min)
-                    min = parseFloat(array[i][1]);
-            return Math.round((min + Number.EPSILON) * 100) / 100;
-        }
+                function updateFile() {
+                    axios({
+                        method: "get",
+                        url: "/get-scores?" + "jwt=" + localStorage.getItem('token') + "&file=" + document.getElementById("fileSelection").value,
+                    }).then((response) => {
+                        jsonData = JSON.parse(response.request.response.replace(/'/g, "\""));
 
-        function getStandardDeviation(array) {
-            var sum = 0;
-            for (var i = 1; i < array.length; i++)
-                sum += Math.pow(parseFloat(array[i][1]) - calculateMean(array), 2);
-            return Math.round((Math.sqrt(sum / array.length) + Number.EPSILON) * 100) / 100
-        }
-    </script>
+                        grades = [];
+
+                        grades.push(['Student', 'Grade']);
+
+                        for (var key in jsonData) {
+                            if (jsonData.hasOwnProperty(key)) {
+                                grades.push([key, jsonData[key]]);
+                            }
+                        }
+
+                        newGrades = structuredClone(grades);
+
+                        update();
+                    });
+                }
+
+                var parsedJsonData;
+                var jsonString = "";
+
+                function saveFile() {
+                    jsonString += "{";
+
+                    for (var i = 1; i < newGrades.length; i++) {
+                        jsonString += "\"" + newGrades[i][0] + "\": " + newGrades[i][1] + ",";
+                    }
+
+                    jsonString = jsonString.substring(0, jsonString.length - 1);
+                    jsonString += "}";
+
+                    parsedJsonData = JSON.parse(jsonString);
+
+                    axios({
+                        method: "post",
+                        url: "/replace-scores?" + "jwt=" + localStorage.getItem('token') + "&file=" + document.getElementById("fileSelection").value,
+                        headers: { "Content-Type": "application/json" },
+                        data: parsedJsonData
+                    }).then((response) => {
+                        console.log(response);
+                    });
+                }
+
+                var modal = document.getElementById("modalDiv");
+                var btn = document.getElementById("modalBtn");
+                var span = document.getElementsByClassName("close")[0];
+
+                btn.onclick = function() {
+                    modal.style.display = "block";
+                }
+
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = function(event) {
+                    if (event.target == modal)
+                        modal.style.display = "none";
+                }
+
+                function saveModal() {
+                    var selection = document.getElementById("selection").value;
+                    var value = document.getElementById("value").value;
+
+                    if (selection == "maxScore")
+                        adjustMaxTo(value);
+                    else if (selection == "minScore")
+                        adjustMinTo(value);
+
+                    closeModal();
+                }
+
+                function closeModal() {
+                    modal.style.display = "none";
+                }
+
+                var slider = document.getElementById("slider");
+                var num = document.getElementById("num");
+
+                update();
+
+                function autoScale() {
+                    if (getMaxValue(grades) != 100) {
+                        slider.value = 100.0 - getMaxValue(grades);
+                        update();
+                    }
+                }
+
+                function adjustMaxTo(value) {
+                    slider.value = value - getMaxValue(grades);
+                    update();
+                }
+
+                function adjustMinTo(value) {
+                    slider.value = value - getMinValue(grades);
+                    update();
+                }
+
+                function reset() {
+                    slider.value = 0;
+                    update();
+                }
+
+                function update() {
+                    num.innerHTML = slider.value;
+
+                    for (var i = 1; i < grades.length; i++) {
+                        newGrades[i] = [grades[i][0], parseFloat(grades[i][1]) + parseFloat(slider.value)];
+                    }
+
+                    google.charts.load("current", {packages:["corechart"]});
+                    google.charts.setOnLoadCallback(drawChart);
+                    
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable(newGrades);
+
+                        var options = {
+                            title: 'Student Test Grades',
+                            legend: { position: 'none' },
+                        };
+
+                        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+
+                    document.getElementById("mean").innerHTML = calculateMean(newGrades);
+                    document.getElementById("max").innerHTML = getMaxValue(newGrades);
+                    document.getElementById("min").innerHTML = getMinValue(newGrades);
+                    document.getElementById("sd").innerHTML = getStandardDeviation(newGrades);
+                }
+
+                function calculateMean(array) {
+                    var sum = 0;
+                    for (var i = 1; i < array.length; i++)
+                        sum += parseFloat(array[i][1]);
+                    return Math.round(((sum / array.length) + Number.EPSILON) * 100) / 100
+                }
+
+                function getMaxValue(array) {
+                    var max = 0;
+                    for (var i = 1; i < array.length; i++)
+                        if (parseFloat(array[i][1]) > max)
+                            max = parseFloat(array[i][1]);
+                    return Math.round((max + Number.EPSILON) * 100) / 100;
+                }
+
+                function getMinValue(array) {
+                    var min = 999999999999999999999999999;
+                    for (var i = 1; i < array.length; i++)
+                        if (parseFloat(array[i][1]) < min)
+                            min = parseFloat(array[i][1]);
+                    return Math.round((min + Number.EPSILON) * 100) / 100;
+                }
+
+                function getStandardDeviation(array) {
+                    var sum = 0;
+                    for (var i = 1; i < array.length; i++)
+                        sum += Math.pow(parseFloat(array[i][1]) - calculateMean(array), 2);
+                    return Math.round((Math.sqrt(sum / array.length) + Number.EPSILON) * 100) / 100
+                }
+            </script>
+        </div>
+    </body>
 </html>

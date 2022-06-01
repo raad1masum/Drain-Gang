@@ -14,10 +14,14 @@
     <body>
         <div layout:fragment="content" th:remove="tag">
             <h1>Upload status</h1>
-            <p>UPLOAD FAILED<p>
+            <p>UPLOAD FAILED, returning to data page...</a><p>
+        </div>
+
+        <script>
+            window.onload = function() {
+                document.location.href="/data";
+            };
+        </script>
+
     </body>
-
-    <script>
-
-    </script>
 </html>

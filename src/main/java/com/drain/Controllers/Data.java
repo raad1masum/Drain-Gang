@@ -25,6 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class Data {
+    @GetMapping("/")
+    public String index() {
+        return "data";
+    }
+
     @GetMapping("/data")
     public String data() {
         return "data";
@@ -83,9 +88,9 @@ public class Data {
     @PostMapping(value = "/upload")
     public String uploadFile(@RequestParam String jwt, @RequestParam("file") MultipartFile file) throws SQLException {
         String username = Authentication.verifyJWT(jwt);
-
+        System.out.println(username);
         if (username == null) {
-            return "403";
+            return "redirect:otherStatus";
         }
 
         if (file.isEmpty()) {
@@ -103,7 +108,7 @@ public class Data {
             return "redirect:otherStatus";
         }
 
-        Database.addFile("alvin", file.getOriginalFilename());
+        Database.addFile(username, file.getOriginalFilename());
 
         return "redirect:data";
     }

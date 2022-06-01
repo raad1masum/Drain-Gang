@@ -5,7 +5,7 @@
     <head>
         <div layout:fragment="metadata" th:remove="tag">
             <title>Upload</title>
-            <link rel="stylesheet" type="text/css" href="/css/data.css">
+            <link rel="stylesheet" type="text/css" href="/css/form.css">
             <script type="text/javascript"
                 src="https://www.gstatic.com/charts/loader.js"></script>
         </div>
@@ -13,21 +13,27 @@
 
     <body>
         <div layout:fragment="content" th:remove="tag">
-            <h1>Upload</h1>
-            <form method="POST" action="/upload" enctype="multipart/form-data">
-                <input type="file" name="file" /><br/><br/>
-                <input type="hidden" id="jwtinput" name="jwt" value="">
-                <input type="submit" value="Submit"/>
-            </form>            
+            <div class="main-container">
+                <div class="form-container">
+                    <form method="POST" action="/upload" enctype="multipart/form-data">
+                        <h1>Upload File</h1>
+                        <input type="file" name="file" class="file-upload"/>
+                        <br>
+                        <input type="hidden" id="jwtinput" name="jwt" value="">
+                        <input type="submit" value="Submit" class="submit-btn"/>
+                    </form>
+                </div>
+            </div>
+            <script>
+                window.onload = function() {
+                    document.getElementById("jwtinput").value = localStorage.getItem("token")
+        
+                    if (localStorage.length == 0) {
+                        document.location.href="/";
+                    }
+                }
+            </script>
+        </div>
     </body>
 
-    <script>
-        window.onload = function() {
-            try {
-                document.getElementById("jwtinput").value = localStorage.getItem("token")
-            } catch {
-                console.log("no jwt")
-            }
-        }
-    </script>
 </html>
