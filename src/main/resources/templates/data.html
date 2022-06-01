@@ -99,6 +99,8 @@
                     }).then((response) => {
                         jsonData = JSON.parse(response.request.response.replace(/'/g, "\""));
 
+                        grades = [];
+
                         grades.push(['Student', 'Grade']);
 
                         for (var key in jsonData) {
