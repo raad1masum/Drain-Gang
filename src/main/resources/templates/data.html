@@ -34,6 +34,7 @@
             <div class="flex flex-col items-center justify-center">
                 <label for="fileSelection">Select File: </label>
                 <select id="fileSelection" name="fileSelection" onchange="updateFile()">
+                    <option value="null"></option>
                 </select>
                 <br>
                 <div class="bottom-btn-container flex flex-col items-center">
@@ -95,7 +96,7 @@
 
                         for (var i = 0; i < files.length - 1; i++)
                             var fileSelection = document.getElementById("fileSelection")
-                                .innerHTML += "<option value='" + files[i] + "''>" + files[i] + "</option>";
+                                .innerHTML += "<option value='" + files[i] + "'>" + files[i] + "</option>";
                     });
                 }
 
