@@ -20,24 +20,7 @@
         <!-- Footer of Page, includes things like contacts or copywrite -->
         <!-- <div th:replace="fragments/footer :: footer"></div> -->
 
-        <script>
-            function addLg() {
-                var k = document.getElementById("lg-link");
-                k.removeAttribute("hidden");
-            }
-
-            function removeLg() {
-                var k = document.getElementById("lg-link");
-                k.setAttribute("hidden", "")
-            }
-
-            function lg() {
-                localStorage.clear();
-                removeLg();
-                document.location.href="/login-form";
-            }
-
-        </script>
+        
 
     </body>
 </html>
