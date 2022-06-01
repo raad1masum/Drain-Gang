@@ -34,6 +34,18 @@ public class Authentication {
         return "BAD_CREDENTIALS";
     }
 
+    @GetMapping(value="/get-name")
+    @ResponseBody
+    public String getName(@RequestParam String token) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256("development_secret")).build();
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getAudience().get(0);
+        } catch (JWTVerificationException e) {
+            return "NULL";
+        }
+    }
+
     public static String verifyJWT(String token) {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256("development_secret")).build();
