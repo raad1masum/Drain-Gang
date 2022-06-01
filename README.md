@@ -1,11 +1,8 @@
 # Drain-Gang
 
-Website URL: http://18.190.152.109/
+Website URL: https://drain.nighthawkcodingsociety.com/
 
 Github pages: https://akshayrohatgi.com/drain-jekyll/
-
-Note: IP is temporary until sponsor decides on domain name.
-
 
 
 | Team Member | Github Profile                                         | Commits                                                                         | 
