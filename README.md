@@ -2,7 +2,7 @@
 
 Website URL: https://drain.nighthawkcodingsociety.com/
 
-Github pages: https://akshayrohatgi.com/drain-jekyll/
+Github pages: https://akshayrohatgi.com/drain-jekyll/ | [(repo)](https://github.com/Akshay-Rohatgi/drain-jekyll)
 
 
 | Team Member | Github Profile                                         | Commits                                                                         | 
