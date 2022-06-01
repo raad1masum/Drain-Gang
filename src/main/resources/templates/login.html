@@ -28,19 +28,19 @@
                 </form>
             </div>
         </div>
+        <script>
+            function login() {
+                var username = document.getElementById("u").value
+                var password = document.getElementById("p").value
+                axios({
+                    method: "post",
+                    url: "/login?" + "username=" + username + "&password=" + password,
+                    headers: { "Content-Type": "text/plain" }
+                }).then(resp => {
+                    localStorage.setItem('token', resp.data);
+                    document.location.href="/data";
+                });
+            }
+        </script>
     </body>
-
-    <script>
-        function login() {
-            var username = document.getElementById("u").value
-            var password = document.getElementById("p").value
-            axios({
-                method: "post",
-                url: "/login?" + "username=" + username + "&password=" + password,
-                headers: { "Content-Type": "text/plain" }
-            }).then(resp => {
-                localStorage.setItem('token', resp.data);
-            });
-        }
-    </script>
 </html>
