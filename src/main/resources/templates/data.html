@@ -149,6 +149,10 @@
                     });
                 }
 
+                function downloadFile() {
+                    window.open("/download-file?" + "jwt=" + localStorage.getItem('token') + "&file=" + document.getElementById("fileSelection").value);
+                }
+
                 var modal = document.getElementById("modalDiv");
                 var btn = document.getElementById("modalBtn");
                 var span = document.getElementsByClassName("close")[0];
