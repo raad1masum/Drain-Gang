@@ -37,10 +37,14 @@
                     url: "/login?" + "username=" + username + "&password=" + password,
                     headers: { "Content-Type": "text/plain" }
                 }).then(resp => {
-                    if (localStorage.length > 0) {
-                        localStorage.setItem('token', resp.data);
+                    localStorage.setItem('token', resp.data);
+
+                    if ( localStorage.getItem('token') == "BAD_CREDENTIALS" ) {
+                        localStorage.clear();
+                    } else {
                         document.location.href="/data";
                     }
+
                 });
             }
         </script>
