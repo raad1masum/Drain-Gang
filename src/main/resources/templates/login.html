@@ -37,8 +37,10 @@
                     url: "/login?" + "username=" + username + "&password=" + password,
                     headers: { "Content-Type": "text/plain" }
                 }).then(resp => {
-                    localStorage.setItem('token', resp.data);
-                    document.location.href="/data";
+                    if (localStorage.length > 0) {
+                        localStorage.setItem('token', resp.data);
+                        document.location.href="/data";
+                    }
                 });
             }
         </script>
